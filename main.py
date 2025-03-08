@@ -7,6 +7,8 @@ import json
 
 COUNTRIES_DATASET_PATH = 'data/consolidated/countries_dataset.csv'
 SEP = ';'
+FLAG_NOT_FOUND_URL = 'https://upload.wikimedia.org/wikipedia/commons/2/2f/' \
+    'Missing_flag.png'
 
 
 class SelectCountryOption(Enum):
@@ -34,6 +36,35 @@ def get_random_country(using_distribution=True):
     return np.random.choice(data['code'], p=distribution)
 
 
+def select_country(code_to_name):
+    option = st.selectbox(
+        '¿Como quieres obtener el país?',
+        list(SelectCountryOption),
+        format_func=lambda x: x.value
+    )
+    country = None
+    if option == SelectCountryOption.SELECTION:
+        country = st.selectbox(
+            'Selecciona un país:',
+            sorted(
+                country_code_to_name,
+                key=lambda x: code_to_name.get(x, x)
+            ),
+            index=None,
+            format_func=lambda x: code_to_name.get(x, x),
+            placeholder='Selecciona un país'
+        )
+
+    else:
+        if st.button("¿Dónde nací?"):
+            country = get_random_country(
+                option == SelectCountryOption.BY_POPULATION
+            )
+    if country is not None:
+        st.session_state.country = country
+    return country
+
+
 def display_map(country_information):
     coordinates = country_information.geo_points.values[0]
     if not coordinates:
@@ -42,14 +73,20 @@ def display_map(country_information):
         json.loads(coordinates), columns=['lon', 'lat'],
     )
 
-    # Display country on map
-    st.map(country_coordinates, size=1)
+    # Display country on map with a discrete color
+    st.map(country_coordinates, color='#eeeeee')
 
 
 def display_flag(country_information):
+    flag_url = country_information.flag_url.values[0]
+    caption = None
+    if not isinstance(flag_url, str) and np.isnan(flag_url):
+        flag_url = FLAG_NOT_FOUND_URL
+        caption = 'Bandera no encontrada'
     st.image(
-        country_information.flag_url.values[0],
+        flag_url,
         use_container_width=False,
+        caption=caption,
     )
 
 
@@ -108,39 +145,22 @@ def get_wikipedia_link(country_name):
     return f"https://es.wikipedia.org/wiki/{country_name_formatted}"
 
 
-data_load_state = st.text('Cargando datos...')
-data = load_dataset()
-data_load_state.empty()
+st.set_page_config(
+    page_title='Donde nací',
+    page_icon=':world_map:'
+)
+st.title('¿Dónde podría haber nacido?')
+
+with st.spinner('Cargando datos...'):
+    data = load_dataset()
 
 country_code_to_name = dict(zip(data['code'], data['name']))
 
-# Initialize session state for country and table data
+# Initialize session state for country
 if "country" not in st.session_state:
     st.session_state.country = None
 
-
-option = st.selectbox(
-    '¿Como quieres obtener el país?',
-    list(SelectCountryOption),
-    format_func=lambda x: x.value
-)
-
-if option == SelectCountryOption.SELECTION:
-    country = st.selectbox(
-        'Selecciona un país:',
-        sorted(country_code_to_name),  # Sort by the value instead
-        index=None,
-        format_func=lambda x: country_code_to_name.get(x, x),
-        placeholder='Selecciona un país'
-    )
-    if country is not None:
-        st.session_state.country = country
-else:
-    text = ''
-    if st.button("Obtén un país"):
-        st.session_state.country = get_random_country(
-            option == SelectCountryOption.BY_POPULATION
-        )
+select_country(country_code_to_name)
 
 # Display selected country
 if st.session_state.country:
