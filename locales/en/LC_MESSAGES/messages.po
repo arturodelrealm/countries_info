@@ -1,0 +1,97 @@
+# English translations for PACKAGE package.
+# Copyright (C) 2025 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2025.
+#
+msgid   ""
+msgstr  "Project-Id-Version: PACKAGE VERSION\n"
+        "Report-Msgid-Bugs-To: \n"
+        "POT-Creation-Date: 2025-03-16 21:29+0000\n"
+        "PO-Revision-Date: 2025-03-16 18:23+0000\n"
+        "Last-Translator: Automatically generated\n"
+        "Language-Team: none\n"
+        "Language: en\n"
+        "MIME-Version: 1.0\n"
+        "Content-Type: text/plain; charset=UTF-8\n"
+        "Content-Transfer-Encoding: 8bit\n"
+        "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: main.py:44
+msgid   "Por población"
+msgstr  "By population"
+
+#: main.py:45
+msgid   "Aleatorio"
+msgstr  "Randomly"
+
+#: main.py:46
+msgid   "Seleccionar uno manualmente"
+msgstr  "Manual selection"
+
+#: main.py:70
+msgid   "¿Como quieres obtener el país?"
+msgstr  "How do you want to get the country?"
+
+#: main.py:77
+msgid   "Selecciona un país:"
+msgstr  "Choose a country:"
+
+#: main.py:84
+msgid   "Selecciona un país"
+msgstr  "Choose a country"
+
+#: main.py:88
+msgid   "¿Dónde nací?"
+msgstr  "Where do I born?"
+
+#: main.py:114
+msgid   "Bandera no encontrada"
+msgstr  "Flag not found"
+
+#: main.py:132
+msgid   "No hay información"
+msgstr  "No data available"
+
+#: main.py:135
+msgid   "Capital"
+msgstr  "Capital"
+
+#: main.py:136
+msgid   "Continente"
+msgstr  "Continent"
+
+#: main.py:138
+msgid   "Población"
+msgstr  "Population"
+
+#: main.py:141
+msgid   "Área (km^2)"
+msgstr  "Area (km^2)"
+
+#: main.py:142
+msgid   "Expectativa de vida"
+msgstr  "Life expectancy"
+
+#: main.py:142
+msgid   "{} años"
+msgstr  "{} years"
+
+#: main.py:143
+msgid   "Probabilidad de no superar el año"
+msgstr  "Probability of die before the year"
+
+#: main.py:145
+msgid   "Más información del país en"
+msgstr  "More information about the country in"
+
+#: main.py:166
+msgid   "País seleccionado: {}"
+msgstr  "Selected country: {}"
+
+#: main.py:184
+msgid   "¿Dónde podría haber nacido?"
+msgstr  "Where could I born?"
+
+#: main.py:186
+msgid   "Cargando datos..."
+msgstr  "Loading data..."
